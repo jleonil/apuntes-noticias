@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Noticias Universitaria</title>
+    <!-- Cargar Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración personalizada de Tailwind para colores y fuentes -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-light': '#f8fafc',
+                        'brand-dark': '#0f172a',
+                        'brand-accent': '#3b82f6', // Un azul vibrante pero sobrio
+                        'brand-accent-hover': '#2563eb',
+                        'brand-gray': '#64748b'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                        'serif': ['Merriweather', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Importar fuentes de Google -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Pequeño ajuste para transiciones suaves */
+        .hover-elevate {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .hover-elevate:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos para el Smartphone y Carrusel */
+        .phone-mockup-shadow {
+            box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 0 2px 1px rgba(255, 255, 255, 0.2);
+        }
+
+        .ig-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 9999px;
+            background-color: rgba(255, 255, 255, 0.35);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ig-dot.active {
+            width: 14px;
+            background-color: #38bdf8;
+        }
+
+        @keyframes tiktok-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 10px rgba(37, 244, 238, 0.5));
+            }
+
+            50% {
+                transform: scale(1.05);
+                filter: drop-shadow(0 0 16px rgba(254, 44, 85, 0.7));
+            }
+        }
+
+        .tiktok-pulse-anim {
+            animation: tiktok-pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes disc-spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate-disc-spin {
+            animation: disc-spin 3.5s linear infinite;
+        }
+    </style>
+</head>
+
+<body id="inicio" class="bg-brand-light text-brand-dark font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- Navegación Superior -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="font-serif font-bold text-2xl tracking-tight text-brand-dark">
+                        <span class="text-brand-accent">Apu</span>ntes
+                    </span>
+                </div>
+
+                <!-- Menú Principal (Desktop) -->
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <a href="#inicio"
+                        class="border-brand-accent text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        Inicio
+                    </a>
+                    <a href="#nacionales"
+                        class="border-transparent text-brand-gray hover:border-gray-300 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
+                        Nacionales
+                    </a>
+                    <a href="#policiales"
+                        class="border-transparent text-brand-gray hover:border-gray-300 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
+                        Policiales
+                    </a>
+                    <a href="#cultura"
+                        class="border-transparent text-brand-gray hover:border-gray-300 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
+                        Reportajes
+                    </a>
+                    <a href="#opinion"
+                        class="border-transparent text-brand-gray hover:border-gray-300 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
+                        Opinión
+                    </a>
+                </div>
+
+                <!-- Botón Suscribirse (Desktop) -->
+                <div class="hidden sm:flex items-center">
+                    <a href="#boletin"
+                        class="bg-brand-accent hover:bg-brand-accent-hover text-white px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 shadow-sm">
+                        Suscribirse al Boletín
+                    </a>
+                </div>
+
+                <!-- Botón Menú Móvil -->
+                <div class="-mr-2 flex items-center sm:hidden">
+                    <button id="mobile-menu-button" type="button"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-brand-gray hover:text-brand-dark hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-accent"
+                        aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Abrir menú principal</span>
+                        <!-- Icono hamburguesa -->
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div class="hidden sm:hidden bg-white border-b border-gray-200 shadow-lg" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#inicio"
+                    class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-brand-dark bg-gray-50 border-l-4 border-brand-accent">Inicio</a>
+                <a href="#nacionales"
+                    class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-brand-gray hover:text-brand-dark hover:bg-gray-50">Nacionales</a>
+                <a href="#policiales"
+                    class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-brand-gray hover:text-brand-dark hover:bg-gray-50">Policiales</a>
+                <a href="#cultura"
+                    class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-brand-gray hover:text-brand-dark hover:bg-gray-50">Reportajes</a>
+                <a href="#opinion"
+                    class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-brand-gray hover:text-brand-dark hover:bg-gray-50">Opinión</a>
+            </div>
+            <div class="pt-3 pb-4 border-t border-gray-200 px-4">
+                <a href="#boletin"
+                    class="mobile-nav-link block text-center w-full bg-brand-accent hover:bg-brand-accent-hover text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm transition-colors">
+                    Suscribirse al Boletín
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="flex-grow">
+
+        <!-- Sección Destacada Principal + Componente Smartphone de Redes Sociales -->
+        <section id="noticia-central" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+                <!-- Noticia Principal (PROTAGONISTA ABSOLUTA - 8 columnas en desktop) -->
+                <div class="lg:col-span-8">
+                    <div
+                        class="relative bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden hover-elevate group h-full flex flex-col justify-between">
+                        <div class="grid grid-cols-1 md:grid-cols-2 h-full">
+                            <!-- Imagen destacada -->
+                            <a href="noticia_central_ninis.html"
+                                class="block relative h-64 md:h-full min-h-[340px] w-full overflow-hidden">
+                                <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                                    src="CONTENIDO_CENTRAL/ninis_jovenes_peru_portada.jpg"
+                                    alt="Jóvenes en edad laboral y formativa en las calles de Lima">
+                                <!-- Etiqueta sobre la imagen -->
+                                <div
+                                    class="absolute top-4 left-4 bg-brand-accent text-white px-3 py-1.5 text-xs font-bold uppercase rounded-md tracking-wider shadow-md">
+                                    Informe Central
+                                </div>
+                            </a>
+                            <!-- Contenido destacado con mayor jerarquía tipográfica -->
+                            <div class="p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center text-xs sm:text-sm text-brand-gray mb-3 space-x-3">
+                                        <span class="uppercase tracking-wider font-bold text-brand-accent">Reportaje
+                                            Especial</span>
+                                        <span>•</span>
+                                        <span class="font-medium">27 Septiembre, 2026</span>
+                                    </div>
+                                    <h1
+                                        class="text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-serif font-extrabold text-brand-dark leading-[1.2] mb-4 group-hover:text-brand-accent transition-colors duration-300">
+                                        <a href="noticia_central_ninis.html">
+                                            Los ‘ninis’ en Perú: una generación que queda fuera de las aulas y del
+                                            trabajo
+                                        </a>
+                                    </h1>
+                                    <p class="text-base text-brand-gray mb-6 line-clamp-4 leading-relaxed">
+                                        Cada vez más jóvenes enfrentan dificultades para continuar sus estudios o
+                                        incorporarse al
+                                        mercado laboral. Una investigación sobre las verdaderas causas de un fenómeno
+                                        estructural
+                                        que va más allá de la falta de empleo.
+                                    </p>
+                                </div>
+                                <div
+                                    class="mt-auto pt-4 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                                    <div class="flex items-center">
+                                        <div
+                                            class="flex-shrink-0 h-11 w-11 rounded-full bg-brand-accent text-white flex items-center justify-center font-serif font-bold text-sm shadow-sm">
+                                            JS
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-sm font-bold text-brand-dark">Por Juan Sotomayor</p>
+                                            <p class="text-xs text-brand-gray">Universidad Científica del Sur</p>
+                                        </div>
+                                    </div>
+                                    <a href="noticia_central_ninis.html"
+                                        class="inline-flex items-center text-sm font-bold text-brand-accent hover:text-brand-accent-hover group-hover:translate-x-1 transition-all">
+                                        Leer reportaje completo
+                                        <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna Smartphone de Redes Sociales (COMPLEMENTO VISUAL SECUNDARIO - 4 columnas en desktop) -->
+                <div class="lg:col-span-4 flex flex-col items-center w-full">
+
+                    <!-- Encabezado editorial sobrio y secundario -->
+                    <div class="w-full max-w-[295px] mb-2.5 flex items-center justify-between px-1">
+                        <div class="flex items-center space-x-1.5">
+                            <span class="inline-block w-2 h-2 rounded-full bg-brand-accent"></span>
+                            <span
+                                class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Multimedia</span>
+                        </div>
+                        <span class="text-[10px] text-slate-400 font-medium">Redes Sociales</span>
+                    </div>
+
+                    <!-- Selector de Redes (Pestañas compactas Instagram / TikTok) -->
+                    <div class="w-full max-w-[295px] bg-slate-200/90 p-1 rounded-xl flex space-x-1 mb-3 shadow-inner">
+                        <button id="tab-instagram-btn" type="button" onclick="switchSocialTab('instagram')"
+                            class="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1.5 transition-all duration-200 bg-white text-slate-900 shadow-sm">
+                            <!-- Icono Instagram -->
+                            <svg class="w-3.5 h-3.5 text-pink-600" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                            <span>Instagram</span>
+                        </button>
+                        <button id="tab-tiktok-btn" type="button" onclick="switchSocialTab('tiktok')"
+                            class="flex-1 py-1.5 px-2.5 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1.5 transition-all duration-200 text-slate-600 hover:text-slate-900">
+                            <!-- Icono TikTok -->
+                            <svg class="w-3.5 h-3.5 text-slate-800" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-2.901 2.895 2.896 2.896 0 0 1-2.895-2.895 2.896 2.896 0 0 1 2.895-2.895c.348 0 .68.063.987.176v-3.521a6.34 6.34 0 0 0-.987-.078 6.34 6.34 0 0 0-6.34 6.318 6.34 6.34 0 0 0 6.34 6.318 6.34 6.34 0 0 0 6.34-6.318V8.344a8.17 8.17 0 0 0 5.176 1.836V6.735a4.83 4.83 0 0 1-1.4-.049z" />
+                            </svg>
+                            <span>TikTok</span>
+                        </button>
+                    </div>
+
+                    <!-- Maqueta Visual de Smartphone Moderno y Compacto -->
+                    <div
+                        class="relative w-full max-w-[295px] bg-slate-900 rounded-[44px] p-2.5 phone-mockup-shadow border-[2.5px] border-slate-700/70">
+
+                        <!-- Botones laterales simulados más sutiles -->
+                        <div class="absolute -left-[4px] top-20 w-[2.5px] h-7 bg-slate-600 rounded-l-sm"></div>
+                        <div class="absolute -left-[4px] top-30 w-[2.5px] h-10 bg-slate-600 rounded-l-sm"></div>
+                        <div class="absolute -left-[4px] top-44 w-[2.5px] h-10 bg-slate-600 rounded-l-sm"></div>
+                        <div class="absolute -right-[4px] top-26 w-[2.5px] h-14 bg-slate-600 rounded-r-sm"></div>
+
+                        <!-- Pantalla interna del Smartphone -->
+                        <div class="relative bg-slate-950 rounded-[36px] overflow-hidden text-white flex flex-col border border-slate-800/80 select-none shadow-inner"
+                            style="min-height: 520px;">
+
+                            <!-- Barra de Estado Superior del Móvil -->
+                            <div
+                                class="pt-2 px-4 pb-1.5 flex items-center justify-between text-[10px] font-semibold tracking-tight text-slate-200 z-30 bg-slate-950">
+                                <span>9:41</span>
+                                <!-- Dynamic Island -->
+                                <div
+                                    class="w-20 h-4 bg-black rounded-full flex items-center justify-between px-2 shadow-sm border border-slate-800/60">
+                                    <div class="w-2 h-2 rounded-full bg-slate-900 border border-slate-700/40"></div>
+                                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-500/80 animate-pulse"></div>
+                                </div>
+                                <div class="flex items-center space-x-1.5">
+                                    <!-- Señal móvil -->
+                                    <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                                        <path d="M2 20h20L12 4z" />
+                                    </svg>
+                                    <!-- Wi-Fi -->
+                                    <svg class="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                                        <path d="M12 4C7.31 4 3.07 5.9 0 8.98L12 21 24 8.98C20.93 5.9 16.69 4 12 4z" />
+                                    </svg>
+                                    <!-- Batería -->
+                                    <div class="w-3.5 h-2 border border-slate-300 rounded-xs p-0.5 flex items-center">
+                                        <div class="w-full h-full bg-white rounded-xs"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- VISTA RED SOCIAL: INSTAGRAM -->
+                            <div id="view-instagram" class="flex flex-col flex-grow transition-opacity duration-300">
+
+                                <!-- Header del Post de Instagram -->
+                                <div
+                                    class="px-3 py-1.5 flex items-center justify-between border-b border-slate-800/80 bg-slate-950">
+                                    <div class="flex items-center space-x-2">
+                                        <div
+                                            class="w-7 h-7 rounded-full p-[1.5px] bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600">
+                                            <img src="VOCES/jhonny_avatar.jpg" alt="jhleonill"
+                                                class="w-full h-full rounded-full object-cover border border-black"
+                                                onerror="this.src='https://ui-avatars.com/api/?name=JL&background=3b82f6&color=fff'">
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center space-x-1">
+                                                <span
+                                                    class="text-[11px] font-bold text-white tracking-tight">jhleonill</span>
+                                                <svg class="w-2.5 h-2.5 text-sky-400 fill-current" viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                                                </svg>
+                                            </div>
+                                            <p class="text-[9px] text-slate-400">Trujillo, Perú</p>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="text-slate-400 hover:text-white" aria-label="Opciones">
+                                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                                            <circle cx="5" cy="12" r="2" />
+                                            <circle cx="12" cy="12" r="2" />
+                                            <circle cx="19" cy="12" r="2" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <!-- Contenedor del Carrusel de Imágenes de Instagram (Proporción vertical nativa 4:5) -->
+                                <div class="relative w-full aspect-[4/5] bg-black overflow-hidden group/carousel touch-pan-y"
+                                    id="ig-carousel-container">
+
+                                    <!-- Badge Contador de Diapositiva -->
+                                    <div id="ig-counter-badge"
+                                        class="absolute top-2 right-2 z-20 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded-full text-[10px] font-semibold text-slate-200 shadow">
+                                        1 / 10
+                                    </div>
+
+                                    <!-- Track Deslizante Horizontal -->
+                                    <div id="ig-carousel-track"
+                                        class="flex h-full w-full transition-transform duration-300 ease-out"
+                                        style="transform: translateX(0%);">
+                                        <!-- Las 10 diapositivas se renderizan aquí dinámicamente -->
+                                    </div>
+
+                                    <!-- Flecha de Navegación Izquierda -->
+                                    <button id="ig-prev-btn" type="button" onclick="moveIgSlide(-1)"
+                                        class="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-6 h-6 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity disabled:opacity-0 focus:outline-none"
+                                        aria-label="Imagen anterior">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                                d="M15 19l-7-7 7-7" />
+                                        </svg>
+                                    </button>
+
+                                    <!-- Flecha de Navegación Derecha -->
+                                    <button id="ig-next-btn" type="button" onclick="moveIgSlide(1)"
+                                        class="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-6 h-6 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity disabled:opacity-0 focus:outline-none"
+                                        aria-label="Siguiente imagen">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                                d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <!-- Indicadores de posición (Dots) -->
+                                <div id="ig-carousel-dots"
+                                    class="flex justify-center items-center space-x-1.5 py-1.5 bg-slate-950">
+                                    <!-- Dots interactivos -->
+                                </div>
+
+                                <!-- Barra de Acciones (Like, Comentario, Compartir, Guardar) -->
+                                <div class="px-3 py-1 flex items-center justify-between text-slate-200">
+                                    <div class="flex items-center space-x-3">
+                                        <button type="button" id="ig-like-btn" onclick="toggleIgLike()"
+                                            class="transition-transform active:scale-125 focus:outline-none"
+                                            aria-label="Me gusta">
+                                            <svg id="ig-like-icon"
+                                                class="w-4 h-4 text-slate-200 hover:text-rose-500 transition-colors"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="hover:text-slate-400 focus:outline-none"
+                                            aria-label="Comentar">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="hover:text-slate-400 focus:outline-none"
+                                            aria-label="Compartir">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <button type="button" class="hover:text-slate-400 focus:outline-none"
+                                        aria-label="Guardar">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <!-- Likes, Pie y Descripción de la Publicación -->
+                                <div class="px-3 pb-2 text-[11px] flex-grow flex flex-col justify-between">
+                                    <div>
+                                        <p class="font-bold text-white mb-0.5 text-[11px]" id="ig-likes-count">7 Me
+                                            gusta</p>
+                                        <p class="text-slate-300 leading-snug text-[10.5px]">
+                                            <span class="font-bold text-white mr-1">jhleonill</span>
+                                            Lo que pasa en Trujillo, no se debe quedar en Trujillo.
+                                        </p>
+                                        <p class="text-[9.5px] text-sky-400 mt-0.5 space-x-1 font-medium">
+                                            <span>#Trujillo</span>
+                                            <span>#Apuntes</span>
+                                            <span>#Periodismo</span>
+                                        </p>
+                                    </div>
+                                    <div
+                                        class="mt-1.5 pt-1.5 border-t border-slate-800/80 flex items-center justify-between text-[9px] text-slate-400">
+                                        <span>8 SEPTIEMBRE</span>
+                                        <a href="https://www.instagram.com/p/DdC8swBkaaC/?utm_source=ig_web_copy_link&stkn=NTc4MTIwNjQ2YQ=="
+                                            target="_blank" rel="noopener noreferrer"
+                                            class="text-brand-accent hover:underline flex items-center font-semibold">
+                                            Ver en Instagram
+                                            <svg class="w-2.5 h-2.5 ml-0.5" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- VISTA RED SOCIAL: TIKTOK (VIDEO VERTICAL 9:16 OPERATIVO) -->
+                            <div id="view-tiktok"
+                                class="hidden flex flex-col flex-grow relative bg-black overflow-hidden transition-opacity duration-300"
+                                style="min-height: 480px;">
+
+                                <!-- Reproductor de Video Vertical TikTok -->
+                                <div class="relative w-full h-full flex-grow overflow-hidden cursor-pointer"
+                                    onclick="toggleTikTokPlayback()">
+                                    <video id="tiktok-player" class="absolute inset-0 w-full h-full object-cover"
+                                        src="REDES_SOCIALES/tiktok/video_tiktok_ninis.mp4" playsinline loop muted
+                                        autoplay>
+                                    </video>
+
+                                    <!-- Indicador de Pausa / Play overlay flotante -->
+                                    <div id="tiktok-play-indicator"
+                                        class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-200">
+                                        <div
+                                            class="w-14 h-14 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white">
+                                            <svg class="w-7 h-7 fill-current ml-1" viewBox="0 0 24 24">
+                                                <path d="M8 5v14l11-7z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+
+                                    <!-- Barra Superior TikTok: Siguiendo | Para ti + Botón Silenciar -->
+                                    <div
+                                        class="absolute top-2 inset-x-3 flex items-center justify-between z-20 pointer-events-auto">
+                                        <div
+                                            class="flex items-center space-x-2 text-[11px] font-semibold text-slate-300 drop-shadow">
+                                            <span class="opacity-70">Siguiendo</span>
+                                            <span class="text-white font-bold border-b border-white pb-0.5">Para
+                                                ti</span>
+                                        </div>
+                                        <button type="button" onclick="event.stopPropagation(); toggleTikTokAudio();"
+                                            id="tiktok-audio-btn"
+                                            class="w-7 h-7 rounded-full bg-black/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 hover:bg-black/80 transition-all"
+                                            title="Activar/Desactivar sonido">
+                                            <!-- Icono silenciado por defecto -->
+                                            <svg id="tiktok-audio-icon" class="w-3.5 h-3.5 fill-current"
+                                                viewBox="0 0 24 24">
+                                                <path
+                                                    d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <!-- Barra Lateral de Acciones TikTok (Derecha) -->
+                                    <div
+                                        class="absolute right-2 bottom-14 z-20 flex flex-col items-center space-y-3 pointer-events-auto">
+                                        <!-- Avatar Creador con botón seguir -->
+                                        <div class="relative mb-1">
+                                            <img src="VOCES/jhonny_avatar.jpg" alt="Apuntes"
+                                                class="w-8 h-8 rounded-full border-2 border-white object-cover shadow">
+                                            <span
+                                                class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-[#fe2c55] text-white flex items-center justify-center text-[10px] font-bold leading-none shadow">+</span>
+                                        </div>
+                                        <!-- Like -->
+                                        <button type="button" onclick="event.stopPropagation(); toggleTikTokLike();"
+                                            class="flex flex-col items-center focus:outline-none group">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                <svg id="tiktok-heart-icon" class="w-4 h-4 text-white drop-shadow"
+                                                    fill="currentColor" viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                                </svg>
+                                            </div>
+                                            <span id="tiktok-likes-count"
+                                                class="text-[9px] font-bold text-white drop-shadow mt-0.5">28.4K</span>
+                                        </button>
+                                        <!-- Comentarios -->
+                                        <button type="button" class="flex flex-col items-center focus:outline-none">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center">
+                                                <svg class="w-4 h-4 text-white drop-shadow" fill="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+                                                </svg>
+                                            </div>
+                                            <span class="text-[9px] font-bold text-white drop-shadow mt-0.5">1.8K</span>
+                                        </button>
+                                        <!-- Compartir -->
+                                        <button type="button" class="flex flex-col items-center focus:outline-none">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center">
+                                                <svg class="w-4 h-4 text-white drop-shadow" fill="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z" />
+                                                </svg>
+                                            </div>
+                                            <span class="text-[9px] font-bold text-white drop-shadow mt-0.5">952</span>
+                                        </button>
+                                        <!-- Disco de Audio Giratorio -->
+                                        <div
+                                            class="w-7 h-7 rounded-full bg-slate-800 border-2 border-slate-900 p-0.5 animate-disc-spin flex items-center justify-center shadow-lg">
+                                            <img src="VOCES/jhonny_avatar.jpg" alt="Disco"
+                                                class="w-full h-full rounded-full object-cover">
+                                        </div>
+                                    </div>
+
+                                    <!-- Información Editorial Inferior TikTok -->
+                                    <div class="absolute bottom-2 inset-x-3 z-20 pointer-events-auto pr-12 text-left">
+                                        <div class="flex items-center space-x-1.5 mb-1">
+                                            <span class="text-xs font-bold text-white drop-shadow-md">@apuntes.pe</span>
+                                            <span
+                                                class="px-1.5 py-0.2 bg-brand-accent/80 text-white rounded text-[8px] font-semibold">Oficial</span>
+                                        </div>
+                                        <p
+                                            class="text-[10px] text-slate-100 leading-snug line-clamp-2 drop-shadow-md mb-1.5">
+                                            Los 'ninis' en Perú: Investigación periodística sobre educación, empleo y
+                                            futuro juvenil. #Ninis #Peru #Periodismo
+                                        </p>
+                                        <div class="flex items-center space-x-1 text-[9px] text-slate-300 drop-shadow">
+                                            <svg class="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+                                            </svg>
+                                            <span class="truncate">Voz original - Apuntes Multimedia</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Barra Inferior Home Indicator (iOS) -->
+                            <div class="py-1 flex justify-center bg-slate-950">
+                                <div class="w-20 h-1 bg-slate-600 rounded-full"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Sección de Noticias Recientes (Grid) -->
+        <section id="ultimas-noticias" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-t border-gray-200">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-2xl font-serif font-bold text-brand-dark">Últimas Noticias</h2>
+                <a href="#ultimas-noticias"
+                    class="text-sm font-medium text-brand-accent hover:text-brand-accent-hover flex items-center">
+                    Ver todas
+                    <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Tarjeta Noticia 1 (Nacionales) -->
+                <article id="nacionales"
+                    class="bg-white rounded-xl shadow-sm overflow-hidden hover-elevate flex flex-col h-full group scroll-mt-24">
+                    <a href="noticia_nacional.html" class="block relative h-48 overflow-hidden">
+                        <img src="CONTENIDO_NACIONAL/portada_ovalo_faucett.jpg"
+                            alt="Obras del nuevo Óvalo Faucett en el cruce de Av. Faucett y Av. La Marina"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute top-3 left-3 bg-blue-600/90 backdrop-blur-sm text-white px-2 py-1 text-xs font-semibold rounded shadow-sm">
+                            Nacionales
+                        </div>
+                        <!-- Indicador visual de video -->
+                        <div
+                            class="absolute bottom-3 right-3 bg-black/75 backdrop-blur-sm text-white px-2 py-1 rounded text-xs font-medium flex items-center space-x-1">
+                            <svg class="w-3.5 h-3.5 text-blue-400 fill-current" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            <span>Video • 0:58</span>
+                        </div>
+                    </a>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex items-center justify-between text-xs text-brand-gray mb-2">
+                            <span>Obras viales • Hace 2 horas</span>
+                            <span class="font-semibold text-brand-dark">Por Juan Sotomayor</span>
+                        </div>
+                        <h3
+                            class="text-xl font-serif font-bold text-brand-dark mb-3 group-hover:text-brand-accent transition-colors line-clamp-2">
+                            <a href="noticia_nacional.html">
+                                Nuevo Óvalo Faucett: Inician megaobra vial de S/ 15 millones para transformar el
+                                tránsito entre San Miguel y Callao
+                            </a>
+                        </h3>
+                        <p class="text-sm text-brand-gray mb-4 line-clamp-3 flex-grow">
+                            Con una inversión superior a 15 millones de soles y 180 días de plazo, arrancó la
+                            construcción de la nueva rotonda de 72 metros en el cruce de Faucett y La Marina. Conoce el
+                            plan de desvíos y cómo operará el transporte público.
+                        </p>
+                        <a href="noticia_nacional.html"
+                            class="inline-flex items-center text-sm font-medium text-brand-accent hover:text-brand-accent-hover mt-auto">
+                            Leer más
+                            <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Tarjeta Noticia 2 (Policial) -->
+                <article id="policiales"
+                    class="bg-white rounded-xl shadow-sm overflow-hidden hover-elevate flex flex-col h-full group scroll-mt-24">
+                    <a href="noticia_policial.html" class="block relative h-48 overflow-hidden">
+                        <img src="CONTENIDO_POLICIAL/portada_liceo_naval.jpg"
+                            alt="Reportaje policial del caso Liceo Naval conducido por Jhonny León"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute top-3 left-3 bg-red-600/90 backdrop-blur-sm text-white px-2 py-1 text-xs font-semibold rounded shadow-sm">
+                            Policial
+                        </div>
+                        <!-- Indicador visual de video -->
+                        <div
+                            class="absolute bottom-3 right-3 bg-black/75 backdrop-blur-sm text-white px-2 py-1 rounded text-xs font-medium flex items-center space-x-1">
+                            <svg class="w-3.5 h-3.5 text-red-500 fill-current" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                            <span>Video • 3:09</span>
+                        </div>
+                    </a>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex items-center justify-between text-xs text-brand-gray mb-2">
+                            <span>Último minuto</span>
+                            <span class="font-semibold text-brand-dark">Por Jhonny León</span>
+                        </div>
+                        <h3
+                            class="text-xl font-serif font-bold text-brand-dark mb-3 group-hover:text-brand-accent transition-colors line-clamp-2">
+                            <a href="noticia_policial.html">
+                                Caso Liceo Naval: Dictan internamiento preventivo a seis escolares tras agresión grupal
+                            </a>
+                        </h3>
+                        <p class="text-sm text-brand-gray mb-4 line-clamp-3 flex-grow">
+                            Tras un torneo en San Borja, un escolar denunció agresión en un bus ante la inacción de
+                            adultos. La justicia ordenó internamiento preventivo para seis menores en 'Maranguita'
+                            mientras la Marina reorganiza el plantel.
+                        </p>
+                        <a href="noticia_policial.html"
+                            class="inline-flex items-center text-sm font-medium text-brand-accent hover:text-brand-accent-hover mt-auto">
+                            Leer más
+                            <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Tarjeta Noticia 3 (Cultura) -->
+                <article id="cultura"
+                    class="bg-white rounded-xl shadow-sm overflow-hidden hover-elevate flex flex-col h-full group scroll-mt-24">
+                    <a href="noticia_cultura.html" class="block relative h-48 overflow-hidden">
+                        <img src="CONTENIDO_CULTURA/garaje_a_cielo_abierto_parque_mariposa.jpg"
+                            alt="Banda de rock tocando en vivo en el Parque Mariposa de Comas"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div
+                            class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-brand-dark px-2 py-1 text-xs font-semibold rounded shadow-sm">
+                            Cultura
+                        </div>
+                    </a>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <div class="flex items-center justify-between text-xs text-brand-gray mb-2">
+                            <span>Este fin de semana</span>
+                            <span class="font-semibold text-brand-dark">Por Jhonny León</span>
+                        </div>
+                        <h3
+                            class="text-xl font-serif font-bold text-brand-dark mb-3 group-hover:text-brand-accent transition-colors line-clamp-2">
+                            <a href="noticia_cultura.html">
+                                Garaje a cielo abierto: cuando el parque se convierte en escenario
+                            </a>
+                        </h3>
+                        <p class="text-sm text-brand-gray mb-4 line-clamp-3 flex-grow">
+                            Cada sábado en Comas, bandas de garaje toman el espacio público en la Av. Belaunde y
+                            transforman el Parque Mariposa en un escenario musical al aire libre entre el arte y el
+                            ruido.
+                        </p>
+                        <a href="noticia_cultura.html"
+                            class="inline-flex items-center text-sm font-medium text-brand-accent hover:text-brand-accent-hover mt-auto">
+                            Leer más
+                            <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Sección de Opinión / Columnas (Diseño Alternativo) -->
+        <section id="opinion" class="bg-white py-12 mt-8 scroll-mt-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-serif font-bold text-brand-dark mb-8 border-l-4 border-brand-accent pl-3">Voces
+                    Universitarias</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Artículo de Opinión 1 -->
+                    <div class="flex items-start space-x-4 group cursor-pointer">
+                        <img src="VOCES/JHONNY.jpg" alt="Jhonny León - Columnista de Opinión"
+                            class="w-16 h-16 rounded-full object-cover border-2 border-transparent group-hover:border-brand-accent transition-colors shadow-sm">
+                        <div>
+                            <div class="text-sm text-brand-accent font-semibold mb-1">Opinión</div>
+                            <h4
+                                class="text-lg font-serif font-bold text-brand-dark group-hover:text-brand-accent-hover transition-colors leading-tight mb-2">
+                                La importancia del bienestar mental en época de exámenes
+                            </h4>
+                            <p class="text-sm text-brand-gray mb-2">Por Jhonny León</p>
+                            <p class="text-sm text-gray-500 line-clamp-2">Es fundamental que las instituciones brinden
+                                apoyo psicológico accesible durante los periodos de mayor estrés académico.</p>
+                        </div>
+                    </div>
+
+                    <!-- Artículo de Opinión 2 -->
+                    <div class="flex items-start space-x-4 group cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            alt="Juan Sotomayor - Columnista de Análisis"
+                            class="w-16 h-16 rounded-full object-cover border-2 border-transparent group-hover:border-brand-accent transition-colors">
+                        <div>
+                            <div class="text-sm text-brand-accent font-semibold mb-1">Análisis</div>
+                            <h4
+                                class="text-lg font-serif font-bold text-brand-dark group-hover:text-brand-accent-hover transition-colors leading-tight mb-2">
+                                Economía circular: ¿Mito o realidad en nuestro campus?
+                            </h4>
+                            <p class="text-sm text-brand-gray mb-2">Por Juan Sotomayor</p>
+                            <p class="text-sm text-gray-500 line-clamp-2">Analizamos las políticas de reciclaje actuales
+                                y qué tanto impacto real están teniendo en la huella de carbono de la universidad.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Newsletter / Suscripción -->
+        <section id="boletin" class="bg-brand-dark py-16 scroll-mt-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-serif font-bold text-white mb-4">No te pierdas ninguna actualización</h2>
+                <p class="text-gray-300 mb-8 text-lg">Suscríbete a nuestro boletín semanal y recibe las noticias más
+                    importantes directamente en tu correo.</p>
+
+                <form
+                    class="flex flex-col sm:flex-row justify-center max-w-md mx-auto space-y-3 sm:space-y-0 sm:space-x-3">
+                    <label for="email-address" class="sr-only">Correo electrónico</label>
+                    <input id="email-address" name="email" type="email" autocomplete="email" required
+                        class="min-w-0 flex-auto rounded-md border-0 px-4 py-3 text-brand-dark shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-brand-accent sm:text-sm sm:leading-6"
+                        placeholder="Ingresa tu correo">
+                    <button type="submit"
+                        class="flex-none rounded-md bg-brand-accent px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-brand-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-accent transition-colors">
+                        Suscribirse
+                    </button>
+                </form>
+                <p class="mt-4 text-xs text-gray-400">Prometemos no enviar spam. Puedes desuscribirte en cualquier
+                    momento.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Pie de Página (Footer) -->
+    <footer class="bg-white border-t border-gray-200 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Marca y descripción -->
+                <div class="md:col-span-1">
+                    <span class="font-serif font-bold text-2xl tracking-tight text-brand-dark mb-4 block">
+                        <span class="text-brand-accent">Apu</span>ntes
+                    </span>
+                    <p class="text-sm text-brand-gray leading-relaxed">
+                        El principal medio informativo de nuestra comunidad universitaria. Dedicados a brindar noticias
+                        veraces, análisis profundos y espacio para todas las voces.
+                    </p>
+                </div>
+
+                <!-- Enlaces Rápidos -->
+                <div>
+                    <h3 class="text-sm font-semibold text-brand-dark tracking-wider uppercase mb-4">Secciones</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#nacionales"
+                                class="text-sm text-brand-gray hover:text-brand-accent transition-colors">Nacionales</a>
+                        </li>
+                        <li><a href="#policiales"
+                                class="text-sm text-brand-gray hover:text-brand-accent transition-colors">Policiales</a>
+                        </li>
+                        <li><a href="#cultura"
+                                class="text-sm text-brand-gray hover:text-brand-accent transition-colors">Reportajes y
+                                Cultura</a></li>
+                        <li><a href="#opinion"
+                                class="text-sm text-brand-gray hover:text-brand-accent transition-colors">Opinión</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Sobre Nosotros -->
+                <div>
+                    <h3 class="text-sm font-semibold text-brand-dark tracking-wider uppercase mb-4">Acerca de</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm text-brand-gray hover:text-brand-accent transition-colors">El
+                                Equipo Editorial</a></li>
+                        <li><a href="#" class="text-sm text-brand-gray hover:text-brand-accent transition-colors">Misión
+                                y Visión</a></li>
+                        <li><a href="#"
+                                class="text-sm text-brand-gray hover:text-brand-accent transition-colors">Trabaja con
+                                nosotros</a></li>
+                        <li><a href="#"
+                                class="text-sm text-brand-gray hover:text-brand-accent transition-colors">Contacto</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Redes Sociales -->
+                <div>
+                    <h3 class="text-sm font-semibold text-brand-dark tracking-wider uppercase mb-4">Síguenos</h3>
+                    <div class="flex space-x-4">
+                        <!-- Icono Twitter (X) -->
+                        <a href="#" class="text-brand-gray hover:text-brand-accent transition-colors">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                        </a>
+                        <!-- Icono Facebook -->
+                        <a href="#" class="text-brand-gray hover:text-brand-accent transition-colors">
+                            <span class="sr-only">Facebook</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <!-- Icono Instagram -->
+                        <a href="#" class="text-brand-gray hover:text-brand-accent transition-colors">
+                            <span class="sr-only">Instagram</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm text-gray-500">
+                    &copy; 2026 UniNews. Todos los derechos reservados. Proyecto Universitario.
+                </p>
+                <div class="mt-4 md:mt-0 space-x-4">
+                    <a href="#" class="text-xs text-gray-500 hover:text-brand-dark">Política de Privacidad</a>
+                    <a href="#" class="text-xs text-gray-500 hover:text-brand-dark">Términos de Servicio</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script para interactividad del menú móvil y Redes Sociales (Smartphone Mockup) -->
+    <script>
+        // ========================================================
+        // CONFIGURACIÓN DE REDES SOCIALES (SMARTPHONE MULTIMEDIA)
+        // ========================================================
+
+        // 1. Lista de imágenes precargadas del carrusel de Instagram
+        const instagramImages = [
+            'REDES_SOCIALES/instagram/slide_1.jpg',
+            'REDES_SOCIALES/instagram/slide_2.jpg',
+            'REDES_SOCIALES/instagram/slide_3.jpg',
+            'REDES_SOCIALES/instagram/slide_4.jpg',
+            'REDES_SOCIALES/instagram/slide_5.jpg',
+            'REDES_SOCIALES/instagram/slide_6.jpg',
+            'REDES_SOCIALES/instagram/slide_7.jpg',
+            'REDES_SOCIALES/instagram/slide_8.jpg',
+            'REDES_SOCIALES/instagram/slide_9.jpg',
+            'REDES_SOCIALES/instagram/slide_10.jpg'
+        ];
+
+        let currentIgSlide = 0;
+        let activeIgSlides = [...instagramImages];
+        let igLiked = false;
+        let tiktokLiked = false;
+
+        // Cambiar entre pestañas de redes sociales (Instagram / TikTok)
+        function switchSocialTab(tab) {
+            const igBtn = document.getElementById('tab-instagram-btn');
+            const ttBtn = document.getElementById('tab-tiktok-btn');
+            const igView = document.getElementById('view-instagram');
+            const ttView = document.getElementById('view-tiktok');
+            const tiktokPlayer = document.getElementById('tiktok-player');
+
+            if (tab === 'instagram') {
+                igBtn.className = "flex-1 py-1.5 px-2.5 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1.5 transition-all duration-200 bg-white text-slate-900 shadow-sm";
+                ttBtn.className = "flex-1 py-1.5 px-2.5 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1.5 transition-all duration-200 text-slate-600 hover:text-slate-900";
+                igView.classList.remove('hidden');
+                ttView.classList.add('hidden');
+
+                // Pausar video de TikTok al salir
+                if (tiktokPlayer && !tiktokPlayer.paused) {
+                    tiktokPlayer.pause();
+                }
+            } else if (tab === 'tiktok') {
+                ttBtn.className = "flex-1 py-1.5 px-2.5 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1.5 transition-all duration-200 bg-slate-900 text-white shadow-sm";
+                igBtn.className = "flex-1 py-1.5 px-2.5 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1.5 transition-all duration-200 text-slate-600 hover:text-slate-900";
+                ttView.classList.remove('hidden');
+                igView.classList.add('hidden');
+
+                // Iniciar reproducción automática de TikTok
+                if (tiktokPlayer) {
+                    const playPromise = tiktokPlayer.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(() => {
+                            // Autoplay con audio puede requerir mute en algunos navegadores
+                            tiktokPlayer.muted = true;
+                            tiktokPlayer.play();
+                        });
+                    }
+                }
+            }
+        }
+
+        // Renderizar diapositivas del carrusel de Instagram
+        function renderIgCarousel() {
+            const track = document.getElementById('ig-carousel-track');
+            const dotsContainer = document.getElementById('ig-carousel-dots');
+            const badge = document.getElementById('ig-counter-badge');
+            const prevBtn = document.getElementById('ig-prev-btn');
+            const nextBtn = document.getElementById('ig-next-btn');
+
+            if (!track) return;
+
+            if (activeIgSlides.length > 0) {
+                track.innerHTML = activeIgSlides.map((imgUrl, idx) => `
+                    <div class="w-full h-full flex-shrink-0 relative overflow-hidden bg-black flex items-center justify-center">
+                        <img src="${imgUrl}" alt="Instagram slide ${idx + 1}" class="w-full h-full object-contain select-none pointer-events-none" loading="lazy" />
+                    </div>
+                `).join('');
+
+                // Renderizar dots
+                dotsContainer.innerHTML = activeIgSlides.map((_, idx) => `
+                    <button type="button" onclick="goToIgSlide(${idx})" class="ig-dot ${idx === currentIgSlide ? 'active' : ''}" aria-label="Ir a diapositiva ${idx + 1}"></button>
+                `).join('');
+
+                badge.textContent = `${currentIgSlide + 1} / ${activeIgSlides.length}`;
+                if (prevBtn) {
+                    prevBtn.style.display = 'flex';
+                    prevBtn.disabled = currentIgSlide === 0;
+                }
+                if (nextBtn) {
+                    nextBtn.style.display = 'flex';
+                    nextBtn.disabled = currentIgSlide === activeIgSlides.length - 1;
+                }
+            }
+        }
+
+        // Mover carrusel hacia adelante o atrás
+        function moveIgSlide(direction) {
+            if (activeIgSlides.length <= 1) return;
+            currentIgSlide = Math.max(0, Math.min(activeIgSlides.length - 1, currentIgSlide + direction));
+            updateIgCarouselPosition();
+        }
+
+        // Ir a diapositiva específica
+        function goToIgSlide(index) {
+            if (index >= 0 && index < activeIgSlides.length) {
+                currentIgSlide = index;
+                updateIgCarouselPosition();
+            }
+        }
+
+        // Actualizar visualización y transform del carrusel
+        function updateIgCarouselPosition() {
+            const track = document.getElementById('ig-carousel-track');
+            const badge = document.getElementById('ig-counter-badge');
+            const dots = document.querySelectorAll('.ig-dot');
+            const prevBtn = document.getElementById('ig-prev-btn');
+            const nextBtn = document.getElementById('ig-next-btn');
+
+            if (track) {
+                track.style.transform = `translateX(-${currentIgSlide * 100}%)`;
+            }
+
+            if (badge) {
+                badge.textContent = `${currentIgSlide + 1} / ${activeIgSlides.length}`;
+            }
+
+            dots.forEach((dot, idx) => {
+                if (idx === currentIgSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+
+            if (prevBtn) prevBtn.disabled = currentIgSlide === 0;
+            if (nextBtn) nextBtn.disabled = currentIgSlide === activeIgSlides.length - 1;
+        }
+
+        // Toggle Me gusta en Instagram
+        function toggleIgLike() {
+            igLiked = !igLiked;
+            const icon = document.getElementById('ig-like-icon');
+            const count = document.getElementById('ig-likes-count');
+
+            if (igLiked) {
+                icon.classList.remove('text-slate-200');
+                icon.classList.add('text-rose-500', 'fill-current');
+                count.textContent = '8 Me gusta';
+            } else {
+                icon.classList.add('text-slate-200');
+                icon.classList.remove('text-rose-500', 'fill-current');
+                count.textContent = '7 Me gusta';
+            }
+        }
+
+        // Funciones interactivas para TikTok
+        function toggleTikTokPlayback() {
+            const player = document.getElementById('tiktok-player');
+            const indicator = document.getElementById('tiktok-play-indicator');
+            if (!player) return;
+
+            if (player.paused) {
+                player.play();
+                if (indicator) {
+                    indicator.classList.add('opacity-0');
+                }
+            } else {
+                player.pause();
+                if (indicator) {
+                    indicator.classList.remove('opacity-0');
+                }
+            }
+        }
+
+        function toggleTikTokAudio() {
+            const player = document.getElementById('tiktok-player');
+            const icon = document.getElementById('tiktok-audio-icon');
+            if (!player || !icon) return;
+
+            player.muted = !player.muted;
+            if (player.muted) {
+                icon.innerHTML = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
+            } else {
+                icon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+            }
+        }
+
+        function toggleTikTokLike() {
+            tiktokLiked = !tiktokLiked;
+            const icon = document.getElementById('tiktok-heart-icon');
+            const count = document.getElementById('tiktok-likes-count');
+            if (!icon || !count) return;
+
+            if (tiktokLiked) {
+                icon.classList.add('text-rose-500');
+                count.textContent = '28.5K';
+            } else {
+                icon.classList.remove('text-rose-500');
+                count.textContent = '28.4K';
+            }
+        }
+
+        // Soporte Swipe Táctil para Móviles en el Carrusel
+        function setupCarouselTouchEvents() {
+            const container = document.getElementById('ig-carousel-container');
+            if (!container) return;
+
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            container.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            container.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchEndX - touchStartX;
+                if (Math.abs(diff) > 35) {
+                    if (diff < 0) {
+                        moveIgSlide(1); // Desplazar derecha
+                    } else {
+                        moveIgSlide(-1); // Desplazar izquierda
+                    }
+                }
+            }, { passive: true });
+        }
+
+        // Sistema dinámico de autodetección de imágenes (manifest.json + probing)
+        function autoDiscoverInstagramImages() {
+            // Intentar leer manifest.json
+            fetch('REDES_SOCIALES/instagram/manifest.json')
+                .then(res => res.json())
+                .then(data => {
+                    if (data && Array.isArray(data.images) && data.images.length > 0) {
+                        activeIgSlides = data.images;
+                        currentIgSlide = 0;
+                        renderIgCarousel();
+                    }
+                })
+                .catch(() => {
+                    // Si no hay servidor HTTP (file:///), las imágenes ya están precargadas en activeIgSlides
+                    console.log("Cargando lista nativa de diapositivas.");
+                });
+        }
+
+        // Inicialización al cargar el DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            // Menú móvil
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+                    mobileMenuButton.setAttribute('aria-expanded', (!isExpanded).toString());
+                    mobileMenu.classList.toggle('hidden');
+                });
+
+                const mobileLinks = mobileMenu.querySelectorAll('.mobile-nav-link');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+
+            // Inicializar Carrusel de Instagram
+            renderIgCarousel();
+            setupCarouselTouchEvents();
+            autoDiscoverInstagramImages();
+        });
+    </script>
+</body>
+
+</html>

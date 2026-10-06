@@ -1,0 +1,6 @@
+file 'C:\Users\jhonn\OneDrive - Grupo Educad\USCUR-CURSOS\Generos de la Realidad\LANDING\CONTENIDO_CENTRAL\video_temp\scene1.mp4'
+file 'C:\Users\jhonn\OneDrive - Grupo Educad\USCUR-CURSOS\Generos de la Realidad\LANDING\CONTENIDO_CENTRAL\video_temp\scene2.mp4'
+file 'C:\Users\jhonn\OneDrive - Grupo Educad\USCUR-CURSOS\Generos de la Realidad\LANDING\CONTENIDO_CENTRAL\video_temp\scene3.mp4'
+file 'C:\Users\jhonn\OneDrive - Grupo Educad\USCUR-CURSOS\Generos de la Realidad\LANDING\CONTENIDO_CENTRAL\video_temp\scene4.mp4'
+file 'C:\Users\jhonn\OneDrive - Grupo Educad\USCUR-CURSOS\Generos de la Realidad\LANDING\CONTENIDO_CENTRAL\video_temp\scene5.mp4'
+file 'C:\Users\jhonn\OneDrive - Grupo Educad\USCUR-CURSOS\Generos de la Realidad\LANDING\CONTENIDO_CENTRAL\video_temp\scene6.mp4'
