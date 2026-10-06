@@ -1,0 +1,13 @@
+INSTRUCCIONES PARA CARGAR LAS IMÁGENES DEL CARRUSEL DE INSTAGRAM
+==================================================================
+
+Publicación objetivo: https://www.instagram.com/p/DdC8swBkaaC/
+Autor: @jhleonill ("Lo que pasa en Trujillo, no se debe quedar en Trujillo.")
+
+Debido a que Instagram bloquea la descarga automatizada sin sesión activa, por favor guarda aquí las imágenes del carrusel con los nombres:
+- slide_1.jpg
+- slide_2.jpg
+- slide_3.jpg
+- ... (o cualquier extensión compatible: .jpg, .jpeg, .png, .webp)
+
+El componente del smartphone en landing_page_de_noticias.html está configurado para detectarlas y proyectarlas inmediatamente con su carrusel táctil y botones deslizantes.
