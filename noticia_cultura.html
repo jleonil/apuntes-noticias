@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garaje a cielo abierto: cuando el parque se convierte en escenario | Apuntes</title>
+    <!-- Cargar Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración personalizada de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-light': '#f8fafc',
+                        'brand-dark': '#0f172a',
+                        'brand-accent': '#3b82f6',
+                        'brand-accent-hover': '#2563eb',
+                        'brand-gray': '#64748b'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                        'serif': ['Merriweather', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fuentes de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        .hover-elevate {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .hover-elevate:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-brand-light text-brand-dark font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- Navegación Superior -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="landing_page_de_noticias.html" class="font-serif font-bold text-2xl tracking-tight text-brand-dark">
+                        <span class="text-brand-accent">Apu</span>ntes
+                    </a>
+                </div>
+                
+                <!-- Menú Principal (Desktop) -->
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <a href="landing_page_de_noticias.html" class="border-transparent text-brand-gray hover:border-gray-300 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                        Inicio
+                    </a>
+                    <a href="noticia_nacional.html" class="border-transparent text-brand-gray hover:border-gray-300 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                        Nacionales
+                    </a>
+                    <a href="noticia_policial.html" class="border-transparent text-brand-gray hover:border-gray-300 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                        Policial
+                    </a>
+                    <a href="noticia_cultura.html" class="border-brand-accent text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        Cultura
+                    </a>
+                    <a href="landing_page_de_noticias.html#opinion" class="border-transparent text-brand-gray hover:border-gray-300 hover:text-brand-dark inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors">
+                        Opinión
+                    </a>
+                </div>
+
+                <!-- Botón Volver a Portada -->
+                <div class="flex items-center space-x-3">
+                    <a href="landing_page_de_noticias.html" class="inline-flex items-center text-sm font-medium text-brand-accent hover:text-brand-accent-hover bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-full transition-colors">
+                        <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        Volver a la Portada
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal del Artículo -->
+    <main class="flex-grow py-8 sm:py-12">
+        <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Migas de pan y botón superior -->
+            <div class="flex flex-wrap items-center justify-between text-sm text-brand-gray mb-6 gap-2">
+                <nav class="flex items-center space-x-2">
+                    <a href="landing_page_de_noticias.html" class="hover:text-brand-accent transition-colors">Inicio</a>
+                    <span>/</span>
+                    <a href="landing_page_de_noticias.html" class="hover:text-brand-accent transition-colors">Últimas Noticias</a>
+                    <span>/</span>
+                    <span class="text-brand-accent font-semibold">Cultura</span>
+                </nav>
+                <a href="landing_page_de_noticias.html" class="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-brand-accent hover:text-brand-accent-hover">
+                    ← Volver a la portada
+                </a>
+            </div>
+
+            <!-- Cabecera del Artículo -->
+            <header class="mb-8">
+                <div class="inline-block bg-blue-100 text-brand-accent font-bold text-xs uppercase px-3 py-1 rounded-md tracking-wider mb-4">
+                    Reportaje Cultural • Comas
+                </div>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-brand-dark leading-tight mb-4">
+                    Garaje a cielo abierto: cuando el parque se convierte en escenario
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-600 font-sans leading-relaxed mb-6 font-light">
+                    Cada sábado, en la Av. Belaunde, en Comas, bandas de garaje toman el espacio público y transforman el parque en un escenario musical entre el arte y el ruido.
+                </p>
+
+                <!-- Metadatos de Publicación y Autor -->
+                <div class="flex items-center justify-between border-y border-gray-200 py-4 text-sm text-brand-gray">
+                    <div class="flex items-center space-x-3">
+                        <img src="VOCES/JHONNY.jpg" alt="Jhonny León" class="w-10 h-10 rounded-full object-cover border border-brand-accent/20 shadow-sm">
+                        <div>
+                            <p class="font-medium text-brand-dark">Por Jhonny León</p>
+                            <p class="text-xs text-brand-gray">Área de Géneros de la Realidad</p>
+                        </div>
+                    </div>
+                    <div class="text-right text-xs sm:text-sm">
+                        <p class="font-medium text-brand-dark">Comas, Lima</p>
+                        <p class="text-xs text-brand-gray">Lectura: 4 min</p>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Imagen Principal -->
+            <figure class="mb-10 rounded-2xl overflow-hidden shadow-md bg-gray-100">
+                <img 
+                    src="CONTENIDO_CULTURA/garaje_a_cielo_abierto_parque_mariposa.jpg" 
+                    alt="Banda de rock tocando en vivo en la explanada del Parque Mariposa en Comas" 
+                    class="w-full h-auto max-h-[500px] object-cover"
+                >
+                <figcaption class="p-3 text-xs sm:text-sm text-brand-gray bg-white border-b border-x border-gray-200 rounded-b-2xl">
+                    <strong class="text-brand-dark">Concierto al paso:</strong> Integrantes de bandas juveniles reunidos con instrumentos, amplificadores y público en el Parque Mariposa de la Av. Belaunde (Comas). Foto: Archivo periodístico original.
+                </figcaption>
+            </figure>
+
+            <!-- Cuerpo del Reportaje -->
+            <div class="prose max-w-none text-gray-700 leading-relaxed font-sans text-base sm:text-lg space-y-6">
+                
+                <p class="first-letter:text-5xl first-letter:font-serif first-letter:font-bold first-letter:text-brand-dark first-letter:float-left first-letter:mr-3 first-letter:pr-1">
+                    Son las seis de la tarde de un sábado cualquiera. En el Parque Mariposa, ubicado en la Av. Belaunde, en Comas, un hombre de mediana edad camina apurado por la vereda, la mirada clavada en la pantalla de su celular. De pronto, un golpe de batería le atraviesa los oídos. Alza la vista. A pocos metros, sobre la explanada del parque, un grupo de jóvenes descarga guitarras, conecta amplificadores y ajusta micrófonos. El hombre reduce la velocidad de su andar. Ya no mira el teléfono. Se detiene unos minutos. Como él, otros transeúntes frenan, se asoman, se sientan en las bancas o simplemente se detienen a escuchar.
+                </p>
+
+                <p>
+                    Así comienza, cada sábado, una escena que se repite en el Parque Mariposa de la Av. Belaunde, en Comas: bandas de garaje que salieron del encierro para tocar al aire libre, a la vista de todos, sin entrada, sin cartel, sin permiso más que el de la calle misma y a la espera de que su público los apoye con alguna colaboración voluntaria.
+                </p>
+
+                <h2 class="text-2xl sm:text-3xl font-serif font-bold text-brand-dark pt-4 border-l-4 border-brand-accent pl-4">
+                    Del garaje al parque: la democratización del escenario
+                </h2>
+
+                <p>
+                    Lo que antes era un ritual subterráneo —ensayar en una cochera, tocar en un sótano, grabar un demo casero— hoy encuentra un lugar en el espacio público, con público real y gente que corea canciones y que agradece con aplausos luego de cada canción. Las tocadas underground ya no se esconden. Se ofrecen. Y el Parque Mariposa se convierte en un escenario improvisado donde el rock vuelve a ser cosa de jóvenes y no tan jóvenes.
+                </p>
+
+                <blockquote class="my-6 p-4 border-l-4 border-brand-accent bg-blue-50/60 rounded-r-lg italic text-brand-dark font-serif text-lg">
+                    "Cada fin de semana se presentan allí una banda distinta, la mayoría son de ‘chibolos’ que tocan rock. Siempre que paso por acá están tocando. A veces hay más gente que ahora, pero todavía es temprano".
+                    <footer class="mt-2 text-xs font-sans not-italic font-semibold text-brand-gray">— Joel (46 años), vecino y transeúnte de la Av. Belaunde</footer>
+                </blockquote>
+
+                <p>
+                    La organización de estas presentaciones parece mantenerse al margen de una estructura formal. Según un espectador y amigo de una de las bandas que se presenta en el parque, los grupos coordinan sus tocadas de manera discreta, aunque cuentan con el permiso de algunos vecinos de la zona. <em>“Creo que ellos tocan así, caleta”</em>, comenta. El mismo espectador señala que tuvo contacto con integrantes de la banda <strong>Cometa a la Deriva</strong>, aunque no conoce directamente cómo se realizan todas las coordinaciones.
+                </p>
+
+                <p>
+                    La escena no es exclusivamente rockera. Aunque el espíritu es eléctrico y distorsionado, la necesidad de conectar con el público hace que fluyan otros géneros más populares: covers de baladas, versiones acústicas, algún reggae, alguna cumbia. El cartel es rotativo, improvisado, impredecible. Y eso, lejos de restarle, le suma.
+                </p>
+
+                <!-- Grid de Fotos Complementarias -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8">
+                    <figure class="rounded-xl overflow-hidden shadow-sm bg-white border border-gray-200">
+                        <img src="CONTENIDO_CULTURA/montaje_instrumentos.jpg" alt="Montaje de amplificadores e instrumentos en la vereda" class="w-full h-64 object-cover">
+                        <figcaption class="p-3 text-xs text-brand-gray">
+                            Prueba de sonido y armado de micrófonos en la explanada previa al inicio de la jornada.
+                        </figcaption>
+                    </figure>
+                    <figure class="rounded-xl overflow-hidden shadow-sm bg-white border border-gray-200">
+                        <img src="CONTENIDO_CULTURA/musicos_en_escenario.jpg" alt="Vocalista y guitarrista en plena interpretación en Comas" class="w-full h-64 object-cover">
+                        <figcaption class="p-3 text-xs text-brand-gray">
+                            Jóvenes intérpretes en vivo frente al público y transeúntes del parque.
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <h2 class="text-2xl sm:text-3xl font-serif font-bold text-brand-dark pt-4 border-l-4 border-brand-accent pl-4">
+                    El parque también es digital
+                </h2>
+
+                <p>
+                    Sobre el suelo agrietado, un celular montado en un trípode transmite en vivo. La pantalla muestra a los músicos, el público. Del otro lado, decenas de usuarios reaccionan, comentan, comparten. El parque físico se fusiona con el escenario digital: lo que ocurre en el Parque Mariposa se multiplica en redes sociales.
+                </p>
+
+                <p>
+                    <em>"Nos ven amigos, gente que no puede venir, otros músicos"</em>, dice Jorge, uno de los guitarristas entre canción y canción. <em>"Es como tocar para dos públicos al mismo tiempo"</em>.
+                </p>
+
+                <p>
+                    La transmisión en vivo no solo amplifica el alcance: también documenta. Cada tocada queda registrada, cada banda deja su huella digital. Es la versión contemporánea del demo casero, pero en tiempo real.
+                </p>
+
+                <h2 class="text-2xl sm:text-3xl font-serif font-bold text-brand-dark pt-4 border-l-4 border-brand-accent pl-4">
+                    El círculo que crece: jóvenes y curiosos de todas las generaciones
+                </h2>
+
+                <p>
+                    El público se forma por capas. Primero los amigos, esos que llegan con instrumentos, cables y botellas de agua. Luego los curiosos: quienes paseaban al perro, quienes salen de Metro, quienes cruzaban el parque sin rumbo y estudiantes estresados de una intensa jornada de estudios se vuelven parte del público principal. Después los que se quedan. Los que se sientan en el pasto y la arena. Los que cantan sin saber que saben la letra.
+                </p>
+
+                <p>
+                    Una chica joven, mochila al hombro, se detiene en seco cuando reconoce el riff de una canción. Sonríe. Saca el celular. Graba. Comparte. Se queda hasta el final del tema.
+                </p>
+
+                <p>
+                    Más de uno aligera el paso para no perderse la música. Otros, en cambio, la escuchan desde lejos, sin acercarse, como quien deja entrar un sonido a la rutina sin interrumpirla del todo, pero todos con algo en común: disfrutan la puesta en escena.
+                </p>
+
+                <h2 class="text-2xl sm:text-3xl font-serif font-bold text-brand-dark pt-4 border-l-4 border-brand-accent pl-4">
+                    ¿Arte o ruido? La delgada línea
+                </h2>
+
+                <p>
+                    Pero no todo es armonía. La pregunta sobrevuela el Parque Mariposa como una nota desafinada: ¿es arte o simple ruido?
+                </p>
+
+                <p>
+                    Para algunos vecinos de la Av. Belaunde, en Comas, la música al aire libre compromete la paz del fin de semana. El volumen, la repetición y la persistencia de los ensayos desde tempranas horas cada sábado generan controversia. Para otros, es un soplo de vida en un espacio que solía estar vacío. La tensión es real y no siempre se resuelve con una conversación.
+                </p>
+
+                <blockquote class="my-6 p-4 border-l-4 border-yellow-500 bg-amber-50/60 rounded-r-lg italic text-brand-dark font-serif text-lg">
+                    "Entiendo que a algunos les moleste, pero prefiero esto a que el parque esté solo. Al menos hay movimiento, hay gente, hay algo; a veces los jóvenes se ponían a beber ahí desde temprano, pero ahora ya no se ve".
+                    <footer class="mt-2 text-xs font-sans not-italic font-semibold text-brand-gray">— Vecina del Parque Mariposa (testimonio en reserva)</footer>
+                </blockquote>
+
+                <p>
+                    El debate no es nuevo: es el eterno conflicto entre el derecho al descanso y el derecho a la expresión. Entre la ciudad como espacio de silencio y la ciudad como espacio de encuentro.
+                </p>
+
+                <h2 class="text-2xl sm:text-3xl font-serif font-bold text-brand-dark pt-4 border-l-4 border-brand-accent pl-4">
+                    El comercio que florece alrededor del ruido
+                </h2>
+
+                <p>
+                    Mientras las bandas tocan, el Parque Mariposa se convierte también en un pequeño mercado. Vendedores ambulantes de gaseosas, snacks, cigarros sueltos. Algún food truck que se estaciona a una cuadra. El comercio formal de la zona —la tienda de la esquina, la farmacia, el kiosco, el Tambo— también siente el movimiento.
+                </p>
+
+                <p>
+                    <em>"Cuando hay música, hay gente. Y cuando hay gente, hay ventas"</em>, resume un comerciante que prefiere mantener su nombre en reserva. <em>"No es que gane 3 mil soles en una noche, pero algo sale (risas)"</em>.
+                </p>
+
+                <p>
+                    La economía informal y la formal se entrelazan alrededor del escenario. El parque no solo suena: también vende. Y en tiempos de incertidumbre, eso no es poco.
+                </p>
+
+                <h2 class="text-2xl sm:text-3xl font-serif font-bold text-brand-dark pt-4 border-l-4 border-brand-accent pl-4">
+                    Un fenómeno que pide ser escuchado
+                </h2>
+
+                <p>
+                    Ya a altas horas de la noche, la banda termina su set. El público aplaude, algunos se acercan a felicitar, otros se dispersan, la mayoría ha dejado su donación para los músicos. La banda empieza a guardar cables, desarman el trípode y apagan el amplificador. El Parque Mariposa vuelve a su rutina. Pero algo quedó: una energía distinta, una sensación de que el espacio público también puede ser un lugar de creación.
+                </p>
+
+                <p>
+                    Las bandas del Parque Mariposa, en la Av. Belaunde, en Comas, no piden permiso. Ocupan. Suenan. Y en ese acto, transforman la ciudad. A veces con arte. A veces con ruido. Casi siempre con algo que se parece a la vida y que hasta policías y serenazgos de la zona disfrutan.
+                </p>
+
+                <!-- Cita de Cierre -->
+                <div class="my-8 p-6 bg-brand-dark text-white rounded-2xl text-center shadow-lg">
+                    <p class="font-serif italic text-xl sm:text-2xl font-medium leading-snug">
+                        "¿Es el parque un escenario legítimo o un espacio usurpado? La respuesta, como la música, depende de quién la escuche."
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Botones de Acción y Regreso al Final -->
+            <div class="mt-12 pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <a href="landing_page_de_noticias.html" class="inline-flex items-center text-sm font-semibold text-white bg-brand-accent hover:bg-brand-accent-hover px-6 py-3 rounded-full transition-colors shadow-sm">
+                    <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Regresar a la portada principal
+                </a>
+                
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="noticia_nacional.html" class="text-sm font-medium text-brand-accent hover:underline">
+                        ← Ver Nacional: Nuevo Óvalo Faucett
+                    </a>
+                    <span class="text-gray-300">|</span>
+                    <a href="noticia_policial.html" class="text-sm font-medium text-brand-accent hover:underline">
+                        Ver Policial: Caso Liceo Naval →
+                    </a>
+                </div>
+            </div>
+
+        </article>
+    </main>
+
+    <!-- Pie de Página (Footer) -->
+    <footer class="bg-white border-t border-gray-200 py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Marca -->
+                <div class="md:col-span-1">
+                    <span class="font-serif font-bold text-2xl tracking-tight text-brand-dark mb-4 block">
+                        <span class="text-brand-accent">Apu</span>ntes
+                    </span>
+                    <p class="text-sm text-brand-gray leading-relaxed">
+                        El principal medio informativo de nuestra comunidad universitaria. Dedicados a brindar noticias veraces, análisis profundos y espacio para todas las voces.
+                    </p>
+                </div>
+                
+                <!-- Secciones -->
+                <div>
+                    <h3 class="text-sm font-semibold text-brand-dark tracking-wider uppercase mb-4">Secciones</h3>
+                    <ul class="space-y-2">
+                        <li><a href="noticia_nacional.html" class="text-sm text-brand-gray hover:text-brand-accent transition-colors">Nacionales</a></li>
+                        <li><a href="noticia_policial.html" class="text-sm text-brand-gray hover:text-brand-accent transition-colors">Policial</a></li>
+                        <li><a href="noticia_cultura.html" class="text-sm text-brand-accent font-medium transition-colors">Cultura y Arte</a></li>
+                        <li><a href="landing_page_de_noticias.html#opinion" class="text-sm text-brand-gray hover:text-brand-accent transition-colors">Opinión</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Acerca de -->
+                <div>
+                    <h3 class="text-sm font-semibold text-brand-dark tracking-wider uppercase mb-4">Acerca de</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-sm text-brand-gray hover:text-brand-accent transition-colors">El Equipo Editorial</a></li>
+                        <li><a href="#" class="text-sm text-brand-gray hover:text-brand-accent transition-colors">Misión y Visión</a></li>
+                        <li><a href="#" class="text-sm text-brand-gray hover:text-brand-accent transition-colors">Trabaja con nosotros</a></li>
+                        <li><a href="#" class="text-sm text-brand-gray hover:text-brand-accent transition-colors">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Redes Sociales -->
+                <div>
+                    <h3 class="text-sm font-semibold text-brand-dark tracking-wider uppercase mb-4">Síguenos</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-brand-gray hover:text-brand-accent transition-colors">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+                        </a>
+                        <a href="#" class="text-brand-gray hover:text-brand-accent transition-colors">
+                            <span class="sr-only">Facebook</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                        </a>
+                        <a href="#" class="text-brand-gray hover:text-brand-accent transition-colors">
+                            <span class="sr-only">Instagram</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm text-gray-500">
+                    &copy; 2026 Apuntes. Todos los derechos reservados. Proyecto Universitario.
+                </p>
+                <div class="mt-4 md:mt-0 space-x-4">
+                    <a href="#" class="text-xs text-gray-500 hover:text-brand-dark">Política de Privacidad</a>
+                    <a href="#" class="text-xs text-gray-500 hover:text-brand-dark">Términos de Servicio</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
